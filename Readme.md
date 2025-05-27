@@ -93,21 +93,16 @@ Dự án này triển khai các tính năng sau:
 
 1.  **Clone repository:**
     ```bash
-    git clone <URL_repository_của_bạn>
-    cd <tên_thư_mục_dự_án>
+    git clone https://github.com/Quang-tuoi-tre/ThucTap_2025.git
+    cd my-local-app
     ```
 
 2.  **Cài đặt các dependency:**
     ```bash
     npm install
-    # hoặc
-    yarn install
-    ```
 
 3.  **Chạy dự án:**
     ```bash
-    npm start
-    # hoặc nếu dùng Vite:
     # npm run dev
     ```
     Ứng dụng sẽ chạy tại `http://localhost:5173` (hoặc cổng khác tùy cấu hình).
