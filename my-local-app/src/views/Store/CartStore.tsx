@@ -69,6 +69,17 @@ class CartStore {
     this.items=this.items.filter((i)=>(i.id!==id))
     this.saveToLocalStorage()
   }
+  logout() {        
+        // Xóa cart items của token cũ
+        const oldCartKey = `cart_items_${this.token}`;
+        localStorage.removeItem(oldCartKey);
+
+        // Reset items về mảng rỗng
+        this.items = [];
+        
+        // Xóa token từ localStorage
+        localStorage.removeItem('token');
+    }
 
     clear() {
     if (!this.token) return;

@@ -1,11 +1,16 @@
 import { observer } from "mobx-react-lite";
 import { List, Image, Button, Typography, InputNumber, Card, Empty, Space } from "antd";
 import { useNavigate } from "react-router-dom";
+import { useCart } from "./Hooks/CustomHooks/useCart";
+import { orderStore } from "./Store/OrderStore";
+import { toJS } from "mobx";
+import { DeleteOutlined, ShoppingOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 import { cartStore } from "./Store/CartStore";
-import { DeleteOutlined, ShoppingOutlined, ArrowLeftOutlined } from '@ant-design/icons';import { toJS } from "mobx";
+
 
 export const CartPage = observer(() => {
   const navigate = useNavigate();
+  const { items, totalPrice, updateQuantity, removeItem, clearCart } = useCart();
 
   // useEffect(()=>{
   //   const token = localStorage.getItem('token')
@@ -14,31 +19,29 @@ export const CartPage = observer(() => {
   //   }
   // },[])
 
-  const totalPrice = cartStore.items.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
-
-    const handleQuantityChange = (id: number, value: number | null) => {
-    if (value ===null||value < 1) return;
-    cartStore.updateQuantity(id, value);
+  const handleQuantityChange = (id: number, value: number | null) => {
+    if (value === null || value < 1) return;
+    updateQuantity(id, value);
   };
 
   const handleRemoveItem = (id: number) => {
-    cartStore.removeItem(id);
+    removeItem(id);
   };
 
   // const handleSubmit = (token:string)=>{
   //   orderStore.createOrder(token)
   // }
 
-  console.log('Product is:', toJS(cartStore.items));
+  console.log('Product is:', toJS(items));
   
+  const handleClearCart = ()=>{
+        clearCart();
+  }
 
 
   return (
-      <div className="cart-page-container">
-      <Card className="cart-card" >
+     <div className="cart-page-container">
+      <Card className="cart-card" bordered={false}>
         <Typography.Title className="cart-page-title" level={2}>
           <ShoppingOutlined style={{ marginRight: '10px' }} /> Giỏ hàng của bạn
         </Typography.Title>
@@ -53,7 +56,7 @@ export const CartPage = observer(() => {
               type="primary"
               size="large"
               icon={<ArrowLeftOutlined />}
-              onClick={() => navigate('/')} 
+              onClick={() => navigate('/')} // Điều hướng về trang chủ hoặc trang sản phẩm
             >
               Tiếp tục mua sắm
             </Button>
@@ -62,7 +65,7 @@ export const CartPage = observer(() => {
           <>
             <List
               className="cart-item-list"
-              itemLayout="vertical" 
+              itemLayout="vertical" // Thay đổi layout để hiển thị thông tin rõ ràng hơn
               dataSource={cartStore.items}
               renderItem={(item) => (
                 <List.Item
@@ -132,7 +135,7 @@ export const CartPage = observer(() => {
                   size="large"
                   icon={<DeleteOutlined />}
                   danger
-                  onClick={()=>{cartStore.clear()}}
+                  onClick={handleClearCart}
                 >
                   Xóa toàn bộ giỏ hàng
                 </Button>

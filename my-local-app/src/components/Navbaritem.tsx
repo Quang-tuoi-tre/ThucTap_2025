@@ -34,6 +34,7 @@ export const Navbar: React.FC = observer(() => {
       not.open({
         message,
         description,
+        showProgress:true,
         type,
         pauseOnHover,
         placement: "topRight",
@@ -48,19 +49,13 @@ export const Navbar: React.FC = observer(() => {
 
   const onClick = (e: any) => {
     if (e.key === '/logout') {
-      localStorage.removeItem('token');
-      if (cartStore.token) {
-      localStorage.removeItem(`cart_items_${cartStore.token}`);
-    }
-
-    // cartStore.clear();
+      cartStore.logout();
       openNotification(
       "success",
       true,
       "Logout successful",
       "You have been logged out of your account. See you again soon!"
     )();
-    navigate('/');
     } else {
       setCurrent(e.key);
     }
