@@ -47,19 +47,33 @@ export const Navbar: React.FC = observer(() => {
   }, [location.pathname]);
 
 
-  const onClick = (e: any) => {
-    if (e.key === '/logout') {
-      cartStore.logout();
-      openNotification(
+const onClick = (e: any) => {
+  if (e.key === '/logout') {
+    localStorage.removeItem('token')
+    navigate('/')
+    openNotification(
       "success",
       true,
       "Logout successful",
       "You have been logged out of your account. See you again soon!"
     )();
-    } else {
-      setCurrent(e.key);
+  } else if (e.key === '/login') {
+    const token = localStorage.getItem('token');
+    if (token) {
+      e.preventDefault();
+      openNotification(
+        "error",
+        true,
+        "Already Logged In",
+        "You are already logged in to your account!"
+      )();
+      
     }
-  };
+    setCurrent(e.key);
+  } else {
+    setCurrent(e.key);
+  }
+};
 
   const handleClick = ()=>{
     const token = localStorage.getItem('token');
