@@ -45,10 +45,10 @@ export const DetailProductPage = observer(() => {
   if (!product) return <div>Can't find product</div>;
 
   const handleAddToCart = () => {
-    if(!cartStore.token){
-        navigate('/login')
-        return
-    }
+    // if(!cartStore.token){
+    //     navigate('/login')
+    //     return
+    // }
     cartStore.addItem(product);
      openNotification(
         "success",  

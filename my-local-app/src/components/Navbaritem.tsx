@@ -53,7 +53,7 @@ export const Navbar: React.FC = observer(() => {
       localStorage.removeItem(`cart_items_${cartStore.token}`);
     }
 
-    cartStore.clear();
+    // cartStore.clear();
       openNotification(
       "success",
       true,
